@@ -1,8 +1,7 @@
-import React from "react";
-import "./App.scss";
+import React from 'react';
+import './App.scss';
+import Header from './Components/Header/Header';
 
-const App = () => (
-  <h1>Welcome to the covid 19 tracker project with React!!!</h1>
-);
+const App = () => <Header />;
 
 export default App;
