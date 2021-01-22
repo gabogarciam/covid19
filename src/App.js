@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { MenuItem, FormControl, Select, Card, CardContent } from '@material-ui/core';
 import './App.scss';
+import Coronavirus from '../public/coronavirus.svg';
 import Cards from './Components/Cards/Cards';
 import Map from './Components/Map/Map';
 
@@ -52,7 +53,10 @@ const App = () => {
     <div className="app">
       <div className="app__left">
         <div className="app__header">
-          <h1>Covid map: Coronavirus cases, recovered, deaths and vaccinations by country</h1>
+          <div className="app__header__title">
+            <img src={Coronavirus} alt="coronavirus Logo" />
+            <h2>Coronavirus (COVID-19)</h2>
+          </div>
           <FormControl className="app__dropdown">
             <Select variant="outlined" value={country} onChange={onCountryChange}>
               <MenuItem value="worldwide">Worldwide</MenuItem>

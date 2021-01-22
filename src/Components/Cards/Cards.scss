@@ -1,1 +1,22 @@
+.infoStats {
+    margin-bottom: 20px;
+}
 
+.infoStats__card {
+    margin-bottom: 10px;
+}
+
+@media (min-width: 900px) {
+    .infoStats {
+        display: flex;
+        justify-content: space-between;
+    }
+    
+    .infoStats__card {
+        margin-left: 10px;
+    }
+
+    .infoStats__card:first-child {
+        margin-left: 0;
+    }
+}
