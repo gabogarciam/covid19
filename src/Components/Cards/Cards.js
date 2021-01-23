@@ -1,63 +1,71 @@
 import React from 'react';
 import { Card, CardContent, Typography } from '@material-ui/core';
 import CountUp from 'react-countup';
+import PropTypes from 'prop-types';
 import './Cards.scss';
 
-const Cards = ({ data: { confirmed, recovered, deaths, lastUpdate } }) => (
+const Cards = ({ data: { cases, recovered, deaths, updated } }) => (
   <div>
     <div className="infoStats">
       <Card className="infoStats__card">
         <CardContent>
-          <Typography className="infoStats__title" color="textSecondary">
-            Coronavis Cases
+          <Typography className="infoStats__infoStats__card--title" color="textSecondary">
+            Total Cases
           </Typography>
-          <Typography className="infoStats__cases" variant="h5">
-            <CountUp start={0} end={confirmed.value} duration={2.5} separator="," />
-          </Typography>
-          <Typography className="infoStats__total" color="textSecondary">
-            {new Date(lastUpdate).toDateString()} / lastUpdate
+          <Typography className="infoStats__infoStats__card--cases" variant="h5">
+            {cases >= 0 ? (
+              <CountUp start={0} end={cases} duration={2.5} separator="," />
+            ) : (
+              'No data'
+            )}
           </Typography>
         </CardContent>
       </Card>
       <Card className="infoStats__card">
         <CardContent>
-          <Typography className="infoStats__title" color="textSecondary">
+          <Typography className="infoStats__infoStats__card--title" color="textSecondary">
             Recovered
           </Typography>
-          <Typography className="infoStats__cases" variant="h5">
-            <CountUp start={0} end={recovered.value} duration={2.5} separator="," />
-          </Typography>
-          <Typography className="infoStats__total" color="textSecondary">
-            {new Date(lastUpdate).toDateString()} / lastUpdate
+          <Typography className="infoStats__infoStats__card--cases" variant="h5">
+            {recovered > 0 ? (
+              <CountUp start={0} end={recovered} duration={2.5} separator="," />
+            ) : (
+              'No data'
+            )}
           </Typography>
         </CardContent>
       </Card>
       <Card className="infoStats__card">
         <CardContent>
-          <Typography className="infoStats__title" color="textSecondary">
+          <Typography className="infoStats__infoStats__card--title" color="textSecondary">
             Deaths
           </Typography>
-          <Typography className="infoStats__cases" variant="h5">
-            <CountUp start={0} end={deaths.value} duration={2.5} separator="," />
-          </Typography>
-          <Typography className="infoStats__total" color="textSecondary">
-            {new Date(lastUpdate).toDateString()} / lastUpdate
+          <Typography className="infoStats__infoStats__card--cases" variant="h5">
+            {deaths > 0 ? (
+              <CountUp start={0} end={deaths} duration={2.5} separator="," />
+            ) : (
+              'No data'
+            )}
           </Typography>
         </CardContent>
       </Card>
     </div>
-    <div className="app__stats">
-      Last update {new Date(lastUpdate).toDateString()} · Source:{' '}
+    <div className="statsFooter">
+      Last update {new Date(updated).toDateString()} · Source:
       <a
-        className="YjZvJe"
+        className="statsFooter__source"
         target="_blank"
         rel="noreferrer"
-        href="https://github.com/mathdroid/covid-19-api"
+        href="https://github.com/disease-sh/API"
       >
-        <span className="bGEAFd">mathdroid/covid-19-api</span>
+        <span className="statsFooter__source--name"> disease-sh</span>
       </a>
     </div>
   </div>
 );
+
+Cards.propTypes = {
+  data: PropTypes.objectOf(PropTypes.any).isRequired,
+};
 
 export default Cards;

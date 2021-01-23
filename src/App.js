@@ -1,17 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { MenuItem, FormControl, Select, Card, CardContent } from '@material-ui/core';
+import { sortData } from './util/util';
 import './App.scss';
 import Coronavirus from '../public/coronavirus.svg';
 import Cards from './Components/Cards/Cards';
+import Table from './Components/Table/Table';
 import Map from './Components/Map/Map';
 
 const App = () => {
   const [countries, setCountries] = useState([]);
+  const [tableData, setTableData] = useState([]);
   const [country, setInputCountry] = useState('worldwide');
   const [countryInfo, setCountryInfo] = useState({});
 
   useEffect(async () => {
-    const global = await fetch('https://covid19.mathdro.id/api/')
+    const global = await fetch('https://disease.sh/v3/covid-19/all')
       .then((response) => response.json())
       .then((data) => data);
     setCountryInfo(global);
@@ -19,13 +22,15 @@ const App = () => {
 
   useEffect(() => {
     const getCountriesData = async () => {
-      fetch('https://covid19.mathdro.id/api/countries')
+      fetch('https://disease.sh/v3/covid-19/countries')
         .then((response) => response.json())
         .then((data) => {
-          const listCountries = data.countries.map((state) => ({
-            name: state.name,
-            value: state.iso2,
+          const listCountries = data.map((state) => ({
+            name: state.country,
+            value: state.countryInfo.iso2,
           }));
+          const sortedData = sortData(data);
+          setTableData(sortedData);
           setCountries(listCountries);
         });
     };
@@ -38,8 +43,8 @@ const App = () => {
 
     const url =
       countryCode === 'worldwide'
-        ? 'https://covid19.mathdro.id/api/'
-        : `https://covid19.mathdro.id/api/countries/${countryCode}`;
+        ? 'https://disease.sh/v3/covid-19/all'
+        : `https://disease.sh/v3/covid-19/countries/${countryCode}`;
 
     await fetch(url)
       .then((response) => response.json())
@@ -61,10 +66,7 @@ const App = () => {
             <Select variant="outlined" value={country} onChange={onCountryChange}>
               <MenuItem value="worldwide">Worldwide</MenuItem>
               {countries.map((state) => (
-                <MenuItem
-                  value={state.value}
-                  key={state.value !== undefined ? state.value : Math.random()}
-                >
+                <MenuItem value={state.value} key={Math.random()}>
                   {state.name}
                 </MenuItem>
               ))}
@@ -72,13 +74,14 @@ const App = () => {
           </FormControl>
         </div>
         <div className="app__stats">
-          {countryInfo.confirmed ? <Cards data={countryInfo} /> : 'Loading...'}
+          {countryInfo.updated ? <Cards data={countryInfo} /> : 'Loading...'}
         </div>
         <Map />
       </div>
       <Card className="app__right">
         <CardContent>
           <h3>Live Cases by Country</h3>
+          {tableData.length > 0 ? <Table countries={tableData} /> : 'Loading...'}
           <h3>Worldwide new cases</h3>
         </CardContent>
       </Card>

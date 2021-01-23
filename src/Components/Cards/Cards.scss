@@ -1,9 +1,15 @@
 .infoStats {
-    margin-bottom: 20px;
+    margin-bottom: 5px;
 }
 
 .infoStats__card {
     margin-bottom: 10px;
+}
+
+.statsFooter {
+    font-size: 0.75rem;
+    line-height: 1;
+    margin-bottom: 20px;
 }
 
 @media (min-width: 900px) {
