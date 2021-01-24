@@ -5,6 +5,7 @@ import './App.scss';
 import Coronavirus from '../public/coronavirus.svg';
 import Cards from './Components/Cards/Cards';
 import Table from './Components/Table/Table';
+import Chart from './Components/Chart/Chart';
 import Map from './Components/Map/Map';
 
 const App = () => {
@@ -12,6 +13,7 @@ const App = () => {
   const [tableData, setTableData] = useState([]);
   const [country, setInputCountry] = useState('worldwide');
   const [countryInfo, setCountryInfo] = useState({});
+  const [casesType, setCasesType] = useState('cases');
 
   useEffect(async () => {
     const global = await fetch('https://disease.sh/v3/covid-19/all')
@@ -80,9 +82,10 @@ const App = () => {
       </div>
       <Card className="app__right">
         <CardContent>
-          <h3>Live Cases by Country</h3>
+          <h3 className="app__righ--liveCases">Live Cases by Country</h3>
           {tableData.length > 0 ? <Table countries={tableData} /> : 'Loading...'}
-          <h3>Worldwide new cases</h3>
+          <h3 className="app__righ--chartNewCases">Worldwide New {casesType}</h3>
+          <Chart casesType={casesType} />
         </CardContent>
       </Card>
     </div>

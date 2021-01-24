@@ -18,7 +18,7 @@ const Table = ({ countries }) => (
 );
 
 Table.propTypes = {
-  countries: PropTypes.objectOf(PropTypes.any).isRequired,
+  countries: PropTypes.instanceOf(Array).isRequired,
 };
 
 export default Table;

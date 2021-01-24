@@ -1,5 +1,8 @@
 const path = require('path');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
+const MomentTimezoneDataPlugin = require('moment-timezone-data-webpack-plugin');
+
+const currentYear = new Date().getFullYear();
 
 module.exports = {
   entry: {
@@ -9,6 +12,9 @@ module.exports = {
   output: {
     path: path.join(__dirname, 'dist'),
     filename: 'bundle.js',
+  },
+  externals: {
+    moment: 'moment',
   },
   module: {
     rules: [
@@ -42,6 +48,10 @@ module.exports = {
       template: './public/index.html',
       filename: './index.html',
       favicon: './public/favicon_io/favicon.png',
+    }),
+    new MomentTimezoneDataPlugin({
+      startYear: currentYear - 100,
+      endYear: currentYear + 100,
     }),
   ],
 };
