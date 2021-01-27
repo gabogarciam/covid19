@@ -57,7 +57,7 @@ const Chart = (casesType) => {
               mode: 'index',
               intersect: false,
               callbacks: {
-                label(tooltipItem, data) {
+                label(tooltipItem) {
                   return numeral(tooltipItem.value).format('+0,0');
                 },
               },
@@ -78,8 +78,7 @@ const Chart = (casesType) => {
                     display: false,
                   },
                   ticks: {
-                    // Include a dollar sign in the ticks
-                    callback(value, index, values) {
+                    callback(value) {
                       return numeral(value).format('0a');
                     },
                   },

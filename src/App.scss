@@ -31,6 +31,11 @@ body {
     flex: none;
 }
 
+.app .app__left {
+    flex: 0.9;
+    margin-right: 10px;
+}
+
 .app__righ--chartNewCases {
     margin: 20px 0;
 }
@@ -45,9 +50,5 @@ body {
         display: flex;
         align-items: center;
         justify-content: space-between;
-    }
-
-    .app__left {
-        flex: 0.9;
     }
 }

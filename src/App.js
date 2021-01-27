@@ -14,12 +14,20 @@ const App = () => {
   const [country, setInputCountry] = useState('worldwide');
   const [countryInfo, setCountryInfo] = useState({});
   const [casesType, setCasesType] = useState('cases');
+  const [mapCenter, setMapCenter] = useState({ lat: 34.80746, lng: -40.4796 });
+  const [mapZoom, setMapZoom] = useState(3);
+  const [mapCountries, setMapCountries] = useState([]);
 
-  useEffect(async () => {
-    const global = await fetch('https://disease.sh/v3/covid-19/all')
-      .then((response) => response.json())
-      .then((data) => data);
-    setCountryInfo(global);
+  useEffect(() => {
+    const getGlobalData = async () => {
+      await fetch('https://disease.sh/v3/covid-19/all')
+        .then((response) => response.json())
+        .then((data) => {
+          setCountryInfo(data);
+        });
+    };
+
+    getGlobalData();
   }, []);
 
   useEffect(() => {
@@ -34,6 +42,7 @@ const App = () => {
           const sortedData = sortData(data);
           setTableData(sortedData);
           setCountries(listCountries);
+          setMapCountries(data);
         });
     };
 
@@ -53,6 +62,13 @@ const App = () => {
       .then((data) => {
         setInputCountry(countryCode);
         setCountryInfo(data);
+        console.log(data.countryInfo);
+        setMapCenter(
+          countryCode === 'worldwide'
+            ? { lat: 34.80746, lng: -40.4796 }
+            : { lat: data.countryInfo.lat, lng: data.countryInfo.long }
+        );
+        setMapZoom(13);
       });
   };
 
@@ -78,16 +94,18 @@ const App = () => {
         <div className="app__stats">
           {countryInfo.updated ? <Cards data={countryInfo} /> : 'Loading...'}
         </div>
-        <Map />
+        <Map countries={mapCountries} casesType={casesType} center={mapCenter} zoom={mapZoom} />
       </div>
-      <Card className="app__right">
-        <CardContent>
-          <h3 className="app__righ--liveCases">Live Cases by Country</h3>
-          {tableData.length > 0 ? <Table countries={tableData} /> : 'Loading...'}
-          <h3 className="app__righ--chartNewCases">Worldwide New {casesType}</h3>
-          <Chart casesType={casesType} />
-        </CardContent>
-      </Card>
+      <div className="app__right">
+        <Card className="app__card">
+          <CardContent>
+            <h3 className="app__righ--liveCases">Live Cases by Country</h3>
+            {tableData.length > 0 ? <Table countries={tableData} /> : 'Loading...'}
+            <h3 className="app__righ--chartNewCases">Worldwide New {casesType}</h3>
+            <Chart casesType={casesType} />
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
 };

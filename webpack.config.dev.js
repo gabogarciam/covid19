@@ -34,6 +34,10 @@ module.exports = {
         ],
       },
       {
+        test: /\.css$/i,
+        use: ['style-loader', 'css-loader'],
+      },
+      {
         test: /\.s[ac]ss$/i,
         use: ['style-loader', 'css-loader', 'sass-loader'],
       },
@@ -47,7 +51,7 @@ module.exports = {
     new HtmlWebPackPlugin({
       template: './public/index.html',
       filename: './index.html',
-      favicon: './public/favicon_io/favicon.png',
+      favicon: './public/favicon.png',
     }),
     new MomentTimezoneDataPlugin({
       startYear: currentYear - 100,
