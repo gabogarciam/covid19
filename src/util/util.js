@@ -6,12 +6,12 @@ const casesTypeColors = {
   cases: {
     hex: '#CC1034',
     rgb: 'rgb(204, 16, 52)',
-    multiplier: 200,
+    multiplier: 220,
   },
   recovered: {
     hex: '#7dd71d',
     rgb: 'rgb(125, 215, 29)',
-    multiplier: 600,
+    multiplier: 210,
   },
   deaths: {
     hex: '#fb4443',

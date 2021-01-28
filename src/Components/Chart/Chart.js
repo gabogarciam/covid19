@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Line } from 'react-chartjs-2';
 import numeral from 'numeral';
 
-const buildChartData = (data, casesType = 'cases') => {
+const buildChartData = (data, casesType) => {
   const chartData = [];
   let lastDataPoint;
 
@@ -20,14 +20,14 @@ const buildChartData = (data, casesType = 'cases') => {
   return chartData;
 };
 
-const Chart = (casesType) => {
+const Chart = ({ casesType }) => {
   const [historyData, setHistoryData] = useState({});
 
   useEffect(() => {
     fetch('https://disease.sh/v3/covid-19/historical/all?lastdays=100')
       .then((response) => response.json())
       .then((data) => {
-        const chartData = buildChartData(data);
+        const chartData = buildChartData(data, casesType);
         setHistoryData(chartData);
       });
   }, [casesType]);

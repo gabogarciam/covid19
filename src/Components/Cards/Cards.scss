@@ -3,7 +3,35 @@
 }
 
 .infoStats__card {
+    flex: 1;
     margin-bottom: 10px;
+    cursor: pointer;
+}
+
+.infoStats__card--selected {
+    border-top: 10px solid greenyellow;
+}
+
+.infoStats__card--red {
+    border-color: red;
+}
+
+.infoStats__card__cases--green {
+    color: lightgreen !important;
+}
+
+.infoStats__card__cases {
+    color: #CC1034;
+    font-weight: 600;
+    font-size: 1.75rem;
+    margin-bottom: 0.5rem;
+}
+
+.infoStats__card__today{
+    color: #6c757d;
+    font-weight: 700 !important;
+    font-size: 0.8rem !important;
+    margin-top: 15px !important;
 }
 
 .statsFooter {
@@ -18,11 +46,7 @@
         justify-content: space-between;
     }
     
-    .infoStats__card {
-        margin-left: 10px;
-    }
-
-    .infoStats__card:first-child {
-        margin-left: 0;
+    .infoStats__card:not(:first-child) {
+        margin-left: 15px;
     }
 }

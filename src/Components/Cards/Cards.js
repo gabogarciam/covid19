@@ -1,71 +1,31 @@
 import React from 'react';
 import { Card, CardContent, Typography } from '@material-ui/core';
 import CountUp from 'react-countup';
-import PropTypes from 'prop-types';
 import './Cards.scss';
 
-const Cards = ({ data: { cases, recovered, deaths, updated } }) => (
-  <div>
-    <div className="infoStats">
-      <Card className="infoStats__card">
-        <CardContent>
-          <Typography className="infoStats__infoStats__card--title" color="textSecondary">
-            Total Cases
-          </Typography>
-          <Typography className="infoStats__infoStats__card--cases" variant="h5">
-            {cases >= 0 ? (
-              <CountUp start={0} end={cases} duration={2.5} separator="," />
-            ) : (
-              'No data'
-            )}
-          </Typography>
-        </CardContent>
-      </Card>
-      <Card className="infoStats__card">
-        <CardContent>
-          <Typography className="infoStats__infoStats__card--title" color="textSecondary">
-            Recovered
-          </Typography>
-          <Typography className="infoStats__infoStats__card--cases" variant="h5">
-            {recovered > 0 ? (
-              <CountUp start={0} end={recovered} duration={2.5} separator="," />
-            ) : (
-              'No data'
-            )}
-          </Typography>
-        </CardContent>
-      </Card>
-      <Card className="infoStats__card">
-        <CardContent>
-          <Typography className="infoStats__infoStats__card--title" color="textSecondary">
-            Deaths
-          </Typography>
-          <Typography className="infoStats__infoStats__card--cases" variant="h5">
-            {deaths > 0 ? (
-              <CountUp start={0} end={deaths} duration={2.5} separator="," />
-            ) : (
-              'No data'
-            )}
-          </Typography>
-        </CardContent>
-      </Card>
-    </div>
-    <div className="statsFooter">
-      Last update {new Date(updated).toDateString()} · Source:
-      <a
-        className="statsFooter__source"
-        target="_blank"
-        rel="noreferrer"
-        href="https://github.com/disease-sh/API"
+const Cards = ({ title, cases, today, onClick, active, isRed }) => (
+  <Card
+    className={`infoStats__card ${active && 'infoStats__card--selected'} ${
+      isRed && 'infoStats__card--red'
+    }`}
+    onClick={onClick}
+  >
+    <CardContent>
+      <Typography className="infoStats__card--title" color="textSecondary">
+        {title}
+      </Typography>
+      <Typography
+        className={`infoStats__card__cases ${!isRed && 'iinfoStats__card__cases--green'}`}
+        variant="h5"
       >
-        <span className="statsFooter__source--name"> disease-sh</span>
-      </a>
-    </div>
-  </div>
+        {cases >= 0 ? <CountUp start={0} end={cases} duration={2.5} separator="," /> : 'No data'}
+      </Typography>
+      <Typography className="infoStats__card__today">
+        {today > 0 ? 'Today +' : ''}
+        {today > 0 ? <CountUp start={0} end={today} duration={2.5} separator="," /> : 'No data'}
+      </Typography>
+    </CardContent>
+  </Card>
 );
-
-Cards.propTypes = {
-  data: PropTypes.objectOf(PropTypes.any).isRequired,
-};
 
 export default Cards;

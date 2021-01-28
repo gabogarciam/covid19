@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import numeral from 'numeral';
 import './Table.scss';
 
 const Table = ({ countries }) => (
@@ -9,7 +10,7 @@ const Table = ({ countries }) => (
         {countries.map(({ country, cases }) => (
           <tr key={country}>
             <td>{country}</td>
-            <td>{cases}</td>
+            <td>{numeral(cases).format('0,0')}</td>
           </tr>
         ))}
       </tbody>
